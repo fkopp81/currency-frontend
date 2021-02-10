@@ -19,7 +19,6 @@ Please use https://currencylayer.com/ to retrieve raw currency data, and please 
 #### Non functional requirements:
 - The app should have certain optimization levels concerning querying/data fetching.  
 - Implement the necessary logic/wrapper to cover the limitation of the free plan provided by `currencylayer-client`.
-- Explicit error handling strategy.
 
 ## your stack
 
