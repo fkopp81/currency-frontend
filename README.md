@@ -10,10 +10,16 @@ Please use https://currencylayer.com/ to retrieve raw currency data, and please 
 
 ## requirements
 
+#### Functional requirements:
 - be able to convert currencies from and to the target currencies mentioned above 
 - be able to retrieve historical currency conversion rates
 - show a chart of daily currency rates for a selected list of target currencies (multi-select)
 - 'correct' handling of currency rates in Javascript
+
+#### Non functional requirements:
+- The app should have certain optimization levels concerning querying/data fetching.  
+- Implement the necessary logic/wrapper to cover the limitation of the free plan provided by `currencylayer-client`.
+- Explicit error handling strategy.
 
 ## your stack
 
