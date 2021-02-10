@@ -11,7 +11,7 @@ Please use https://currencylayer.com/ to retrieve raw currency data, and please 
 ## requirements
 
 #### Functional requirements:
-- be able to convert currencies from and to the target currencies mentioned above 
+- be able to convert currencies from and to the target currencies mentioned above (bi-directional currency converter)
 - be able to retrieve historical currency conversion rates
 - show a chart of daily currency rates for a selected list of target currencies (multi-select)
 - 'correct' handling of currency rates in Javascript
