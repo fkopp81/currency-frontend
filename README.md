@@ -6,9 +6,9 @@ We are a company based in Munich, Germany and are expanding internationally to t
 
 ## the data
 
-Please use https://currencylayer.com/ to retrieve raw currency data, and please utilize the client library provided here: (https://www.npmjs.com/package/currencylayer-client). 
-
-PS: Free tier comes with limited number of requests and features (only [/historical](https://currencylayer.com/documentation#historical_rates) endpoint can be used)
+Please use https://openexchangerates.org/ to retrieve raw currency rates.
+You may simply consume the web service or use the client library provided here: https://www.npmjs.com/package/open-exchange-rates. 
+free Sign up for free tier https://openexchangerates.org/signup/free.
 
 ## requirements
 
