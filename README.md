@@ -8,6 +8,8 @@ We are a company based in Munich, Germany and are expanding internationally to t
 
 Please use https://currencylayer.com/ to retrieve raw currency data, and please utilize the client library provided here: (https://www.npmjs.com/package/currencylayer-client). 
 
+PS: Free tier comes with limited number of requests and features (only [/historical](https://currencylayer.com/documentation#historical_rates) endpoint can be used)
+
 ## requirements
 
 #### Functional requirements:
