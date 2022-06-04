@@ -1,5 +1,5 @@
 import mockConversionHistory from "../../domain/tests/mockIConversionHistory";
-import LocalStoragePersistance from "../implementations/localStorage";
+import LocalStoragePersistance from "../implementations/LocalStoragePersistance"
 import { IPersistance } from "../interfaces/IPersistance";
 
 describe("local store persistance", () =>
@@ -8,30 +8,36 @@ describe("local store persistance", () =>
   { 
     // Arrange
     const localStoragePersistance: IPersistance = new LocalStoragePersistance();
-    const setSpy = jest.spyOn(global.localStorage, "setItem");
-    const getSpy = jest.spyOn(global.localStorage, "getItem");
+
+    const setMock = jest.fn();
+    const getMock = jest.fn(() => "getMockResult");
+    global.localStorage.__proto__.setItem = setMock;
+    global.localStorage.__proto__.getItem = getMock;
 
     const testKey = "testStore";
     // Act
     localStoragePersistance.save(testKey, mockConversionHistory);
     // Assert
-    expect(setSpy).toHaveBeenCalled();
-    expect(getSpy).not.toHaveBeenCalled();
+    expect(setMock).toHaveBeenCalled();
+    expect(getMock).not.toHaveBeenCalled();
   });
   
   test('load uses localStorage get', () =>
   { 
     // Arrange
     const localStoragePersistance: IPersistance = new LocalStoragePersistance();
-    const setSpy = jest.spyOn(global.localStorage, "setItem");
-    const getSpy = jest.spyOn(global.localStorage, "getItem");
+    
+    const setMock = jest.fn();
+    const getMock = jest.fn(() => '{"test": true}');
+    global.localStorage.__proto__.setItem = setMock;
+    global.localStorage.__proto__.getItem = getMock;
 
     const testKey = "testStore";
     // Act
-    localStoragePersistance.save(testKey, mockConversionHistory);
+    localStoragePersistance.load(testKey)
     // Assert
-    expect(setSpy).not.toHaveBeenCalled();
-    expect(getSpy).toHaveBeenCalled();
+    expect(setMock).not.toHaveBeenCalled();
+    expect(getMock).toHaveBeenCalled();
   });
 });
 
