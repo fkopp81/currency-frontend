@@ -1,5 +1,5 @@
 export interface IPersistance
 {
-  save<T>(name: string, data: T): void
-  load<T>(name: string): T
+  save<T extends Record<string, any>>(name: string, data: T): void
+  load<T extends Record<string, any>>(name: string): T
 }
