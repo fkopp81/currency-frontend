@@ -1,1 +1,1 @@
-export * from "./infrastructure/interfaces/IPersistance";
+export * from "./4_infrastructure/interfaces/IPersistance";
