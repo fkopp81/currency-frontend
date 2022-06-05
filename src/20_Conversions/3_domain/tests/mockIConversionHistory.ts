@@ -1,28 +1,27 @@
-import { IConversionHistory } from "../interfaces/IConversionHistory";
+import { ECurrency } from "../../5_objects";
+import { IConversionHistory } from "../../5_objects";
 
 const mockConversionHistory: IConversionHistory = {
   "2022-05-15": {
-    "USD": {
-      base: "USD",
-      timestamp: Date.now(),
+    [ECurrency.USD]: {
+      base: ECurrency.USD,
       rates: {
-        "EUR": 0.01,
-        "USD": 1,
-        "CHF": 0.001
+        [ECurrency.EUR]: 0.01,
+        [ECurrency.USD]: 1,
+        [ECurrency.CHF]: 0.001
       }
     }
   },
-  "2022-05-31": {
-    "EUR": {
-      base: "EUR",
-      timestamp: Date.now(),
+    "2022-05-31": {
+    [ECurrency.EUR]: {
+      base: ECurrency.EUR,
       rates: {
-        "EUR": 1,
-        "USD": 1000,
-        "CHF": 1.5
+        [ECurrency.EUR]: 1,
+        [ECurrency.USD]: 1000,
+        [ECurrency.CHF]: 1.5
       }
     }
   }
-};
+}
 
 export default mockConversionHistory;
