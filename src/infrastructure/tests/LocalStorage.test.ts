@@ -39,6 +39,22 @@ describe("local store persistance", () =>
     expect(setMock).not.toHaveBeenCalled();
     expect(getMock).toHaveBeenCalled();
   });
+
+  test('load throws error when key not present', () =>
+  {
+    // Arrange
+    const localStoragePersistance: IPersistance = new LocalStoragePersistance();
+    
+    const setMock = jest.fn();
+    const getMock = jest.fn();
+    global.localStorage.__proto__.setItem = setMock;
+    global.localStorage.__proto__.getItem = getMock;
+
+    const testKey = "testStore";
+    // Act
+    // Assert
+    expect(() => localStoragePersistance.load(testKey)).toThrow();
+  });
 });
 
 
