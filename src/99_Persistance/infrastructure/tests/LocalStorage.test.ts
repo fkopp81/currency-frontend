@@ -1,4 +1,3 @@
-import mockConversionHistory from "../../domain/tests/mockIConversionHistory";
 import LocalStoragePersistance from "../implementations/LocalStoragePersistance"
 import { IPersistance } from "../interfaces/IPersistance";
 
@@ -15,8 +14,9 @@ describe("local store persistance", () =>
     global.localStorage.__proto__.getItem = getMock;
 
     const testKey = "testStore";
+    const testValue = {test: true};
     // Act
-    localStoragePersistance.save(testKey, mockConversionHistory);
+    localStoragePersistance.save(testKey, testValue);
     // Assert
     expect(setMock).toHaveBeenCalled();
     expect(getMock).not.toHaveBeenCalled();
@@ -27,12 +27,13 @@ describe("local store persistance", () =>
     // Arrange
     const localStoragePersistance: IPersistance = new LocalStoragePersistance();
     
+    const testKey = "testStore";
+    const testValue = '{"test": true}';
+
     const setMock = jest.fn();
-    const getMock = jest.fn(() => '{"test": true}');
+    const getMock = jest.fn(() => testValue);
     global.localStorage.__proto__.setItem = setMock;
     global.localStorage.__proto__.getItem = getMock;
-
-    const testKey = "testStore";
     // Act
     localStoragePersistance.load(testKey)
     // Assert
