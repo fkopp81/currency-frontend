@@ -1,4 +1,4 @@
-import { IConfig } from "100_config/3_domain";
+import { IConfig } from "100_config/5_objects";
 import { ECurrency, IConversion } from "20_Conversions/5_objects";
 import { IRates } from "20_Conversions/5_objects/interfaces/IRates";
 import { IConversionAPI } from "../interfaces/IConversionAPI";
