@@ -1,1 +1,0 @@
-export * from "./4_infrastructure/interfaces/IPersistance";
