@@ -30,7 +30,7 @@ export default class conversions implements IConversions
     date: string,
     conversionHistory: IConversionHistory): Promise<number>
   {
-    const conversion = await this.conversionAPI.getHistoricRates(base, to, date);
+    const conversion = await this.conversionAPI.getHistoricRates(base, date);
     if (!conversionHistory[date]) conversionHistory[date] = {};
     conversionHistory[date][base] = conversion;
     this.persistance.save(this.persistanceKey, conversionHistory);
