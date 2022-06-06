@@ -13,7 +13,7 @@ export default class conversions implements IConversions
   { 
     this.persistanceKey = config.persistanceKeys.conversions;
   }
-  getHistoricRate(base: ECurrency, to: ECurrency, date: string): number
+  async getHistoricRate(base: ECurrency, to: ECurrency, date: string): Promise<number>
   {
     const conversionHistory = this.persistance.load(this.persistanceKey);
     if (!conversionHistory[date] || 
@@ -24,13 +24,13 @@ export default class conversions implements IConversions
     }
     return conversionHistory[date][base]!.rates[to]
   }
-  getHistoricRateFromApi(
+  async getHistoricRateFromApi(
     base: ECurrency,
     to: ECurrency,
     date: string,
-    conversionHistory: IConversionHistory): number
+    conversionHistory: IConversionHistory): Promise<number>
   {
-    const conversion = this.conversionAPI.getHistoricRates(base, to, date);
+    const conversion = await this.conversionAPI.getHistoricRates(base, to, date);
     if (!conversionHistory[date]) conversionHistory[date] = {};
     conversionHistory[date][base] = conversion;
     this.persistance.save(this.persistanceKey, conversionHistory);
@@ -42,12 +42,12 @@ export default class conversions implements IConversions
     return rate;
   }
 
-  getCurrentRate(base: ECurrency, to: ECurrency): number
+  async getCurrentRate(base: ECurrency, to: ECurrency): Promise<number>
   {
     // Should current conversion rate be persisted? Probably not
     // Future feature: Persist current rate for set time
     // const conversionHistory = this.persistence.load(this.persistanceKey);
-    const conversion: IConversion = this.conversionAPI.getCurrentRates(base);
+    const conversion: IConversion = await this.conversionAPI.getCurrentRates(base);
     const rate = conversion.rates[to];
     if(rate === undefined) throw new Error(`Conversion rate ${ECurrency[to]} not available for base ${ECurrency[base]}.`)
     return rate;

@@ -9,7 +9,7 @@ import mockConversionHistory from "./mockIConversionHistory";
 
 describe("Conversion", () =>
 {
-  test("getConversionRate", () =>
+  test("getConversionRate", async () =>
   {
     // Arrange
     const mockConversion: IConversion = {
@@ -25,11 +25,11 @@ describe("Conversion", () =>
     } as IConfig;
     const persistance = mock<IPersistance>();
     const conversionAPI = mock<IConversionAPI>();
-    conversionAPI.getCurrentRates.mockReturnValue(mockConversion);
+    conversionAPI.getCurrentRates.mockReturnValue(Promise.resolve(mockConversion));
     const conversions: IConversions = new Conversions(config, conversionAPI, persistance);
     
     // Act
-    const rate = conversions.getCurrentRate(ECurrency.USD, ECurrency.CHF);
+    const rate = await conversions.getCurrentRate(ECurrency.USD, ECurrency.CHF);
     // Assert
     expect(rate).toBe(mockConversion.rates[ECurrency.CHF]);
     // No persistance for current rates (yet)
@@ -37,7 +37,7 @@ describe("Conversion", () =>
     expect(persistance.save).toBeCalledTimes(0);
   })
 
-  test("getHistoricRate from API when date not persisted", () =>
+  test("getHistoricRate from API when date not persisted", async () =>
   {
         // Arrange
     const conversionFromAPI: IConversion = {
@@ -61,11 +61,11 @@ describe("Conversion", () =>
     const persistance = mock<IPersistance>();
     persistance.load.mockReturnValue(conversionHistoryFromPersistance);
     const conversionAPI = mock<IConversionAPI>();
-    conversionAPI.getHistoricRates.mockReturnValue(conversionFromAPI);
+    conversionAPI.getHistoricRates.mockReturnValue(Promise.resolve(conversionFromAPI));
     const conversions: IConversions = new Conversions(config, conversionAPI, persistance);
     
     // Act
-    const rate = conversions.getHistoricRate(ECurrency.USD, ECurrency.CHF, testDate);
+    const rate = await conversions.getHistoricRate(ECurrency.USD, ECurrency.CHF, testDate);
 
     // Assert
     expect(rate).toBe(conversionFromAPI.rates[ECurrency.CHF]);
@@ -73,7 +73,7 @@ describe("Conversion", () =>
     expect(persistance.save).toBeCalled();
   })
 
-  test("getHistoricRate from API when base currency not persisted", () =>
+  test("getHistoricRate from API when base currency not persisted", async () =>
   {
     // Arrange
     const testDate = "2022-05-31";
@@ -105,11 +105,11 @@ describe("Conversion", () =>
     const persistance = mock<IPersistance>();
     persistance.load.mockReturnValue(conversionHistoryFromPersistance);
     const conversionAPI = mock<IConversionAPI>();
-    conversionAPI.getHistoricRates.mockReturnValue(conversionFromAPI);
+    conversionAPI.getHistoricRates.mockReturnValue(Promise.resolve(conversionFromAPI));
     const conversions: IConversions = new Conversions(config, conversionAPI, persistance);
     
     // Act
-    const rate = conversions.getHistoricRate(testBase, testTo, testDate);
+    const rate = await conversions.getHistoricRate(testBase, testTo, testDate);
 
     // Assert
     expect(rate).toBe(conversionFromAPI.rates[testTo]);
@@ -117,7 +117,7 @@ describe("Conversion", () =>
     expect(persistance.save).toBeCalled();
   })
 
-  test("getHistoricRate from persistance", () =>
+  test("getHistoricRate from persistance", async () =>
   {
     // Arrange
     const testDate = "2022-05-31";
@@ -150,7 +150,6 @@ describe("Conversion", () =>
     {
       throw new Error(`rate for ${ECurrency[testTo]} needs to be different between persistance and API mocks`)
     }
-    const expectedRate = conversionHistoryFromPersistance[testDate][testBase]!.rates[testTo];
 
     const config = {
       persistanceKeys: { conversions: "testKey" }
@@ -158,11 +157,11 @@ describe("Conversion", () =>
     const persistance = mock<IPersistance>();
     persistance.load.mockReturnValue(conversionHistoryFromPersistance);
     const conversionAPI = mock<IConversionAPI>();
-    conversionAPI.getHistoricRates.mockReturnValue(conversionFromAPI);
+    conversionAPI.getHistoricRates.mockReturnValue(Promise.resolve(conversionFromAPI));
     const conversions: IConversions = new Conversions(config, conversionAPI, persistance);
     
     // Act
-    const rate = conversions.getHistoricRate(testBase, testTo, testDate);
+    const rate = await conversions.getHistoricRate(testBase, testTo, testDate);
 
     // Assert
     expect(rate).toBe(conversionHistoryFromPersistance[testDate][testBase]!.rates[testTo]);

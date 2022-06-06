@@ -1,6 +1,5 @@
 import { IConfig } from "100_config/5_objects";
 import { ECurrency, IConversion } from "20_Conversions/5_objects";
-import { mock } from "jest-mock-extended";
 import ConversionAPI from "../implementations/ConversionAPI";
 import { IConversionAPI } from "../interfaces/IConversionAPI"
 
