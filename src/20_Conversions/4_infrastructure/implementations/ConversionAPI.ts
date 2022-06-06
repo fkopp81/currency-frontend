@@ -24,9 +24,18 @@ export default class ConversionAPI implements IConversionAPI
     return await this.convertResponseToConversion(response)
   }
 
-  async getHistoricRates(base: ECurrency, to: ECurrency, date: string): Promise<IConversion>
+  async getHistoricRates(base: ECurrency, date: string): Promise<IConversion>
   {
-    throw new Error("Method not implemented.");
+    const url = new URL(`${date}.json`, this.api.baseUrl)
+    url.search = new URLSearchParams({
+        app_id: this.api.key,
+        base: ECurrency[base],
+        prettyprint: "false"
+      }).toString();
+    const request = new Request(url.href);
+    const response = await fetch(request);
+    if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
+    return await this.convertResponseToConversion(response)
   }
  
   private async convertResponseToConversion(response: Response): Promise<IConversion>
