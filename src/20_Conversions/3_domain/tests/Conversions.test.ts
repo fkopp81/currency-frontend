@@ -94,7 +94,7 @@ describe("Conversion", () =>
     {
       throw new Error(`date ${testDate} must exist in mockConversionHistory`);
     }
-    if (!conversionHistoryFromPersistance[testDate][testBase])
+    if (conversionHistoryFromPersistance[testDate][testBase])
     {
       throw new Error(`base ${ECurrency[testBase]} must not exist in mockConversionHistory on date ${testDate}`);
     }

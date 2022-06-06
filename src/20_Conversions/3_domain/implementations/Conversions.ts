@@ -1,6 +1,6 @@
 import { IConfig } from "100_config/3_domain";
 import { IConversionAPI } from "20_Conversions/4_infrastructure/interfaces/IConversionAPI";
-import { ECurrency, IConversion } from "20_Conversions/5_objects";
+import { ECurrency, IConversion, IConversionHistory } from "20_Conversions/5_objects";
 import { IPersistance } from "99_Persistance/4_infrastructure";
 import { IConversions } from ".."
 
@@ -9,9 +9,37 @@ export default class conversions implements IConversions
   private persistanceKey: string
   constructor(config: IConfig,
     private conversionAPI: IConversionAPI,
-    private persistence: IPersistance)
+    private persistance: IPersistance)
   { 
     this.persistanceKey = config.persistanceKeys.conversions;
+  }
+  getHistoricRate(base: ECurrency, to: ECurrency, date: string): number
+  {
+    const conversionHistory = this.persistance.load(this.persistanceKey);
+    if (!conversionHistory[date] || 
+      !conversionHistory[date][base] || 
+      !conversionHistory[date][base]!.rates[to])
+    {
+      return this.getHistoricRateFromApi(base, to, date, conversionHistory);
+    }
+    return conversionHistory[date][base]!.rates[to]
+  }
+  getHistoricRateFromApi(
+    base: ECurrency,
+    to: ECurrency,
+    date: string,
+    conversionHistory: IConversionHistory): number
+  {
+    const conversion = this.conversionAPI.getHistoricRates(base, to, date);
+    if (!conversionHistory[date]) conversionHistory[date] = {};
+    conversionHistory[date][base] = conversion;
+    this.persistance.save(this.persistanceKey, conversionHistory);
+    const rate = conversion.rates[to];
+    if (rate === undefined)
+    {
+      throw new Error(`Conversion API has no conversion for ${base}->${to} at ${date}`);
+    }
+    return rate;
   }
 
   getCurrentRate(base: ECurrency, to: ECurrency): number
