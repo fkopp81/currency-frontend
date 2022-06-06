@@ -1,10 +1,12 @@
+import { IConfig } from "100_config/3_domain";
 import { ECurrency, IConversion } from "20_Conversions/5_objects";
+import { mock } from "jest-mock-extended";
+import ConversionAPI from "../implementations/ConversionAPI";
 import { IConversionAPI } from "../interfaces/IConversionAPI"
-import { oxr } from "open-exchange-rates";
 
 describe("Conversion API", () =>
 {
-  test("getCurrentRates", () =>
+  test("getCurrentRates", async () =>
   {
     // Arrange
     const testBase = ECurrency.EUR
@@ -12,16 +14,28 @@ describe("Conversion API", () =>
     const currencyString = ECurrency[testTo];
     const expectedRate = 2;
 
-    const openExchangeRatesMock : Record<string, any> = jest.createMockFromModule("open-exchange-rates");
-    openExchangeRatesMock.rates = {
-      [currencyString]: expectedRate
-    }
-    jest.mock("open-exchange-rates");
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve({
+          base: testBase,
+          rates: { [currencyString]: expectedRate }
+        })
+      })
+    ) as jest.Mock;
 
-    const conversionAPI: IConversionAPI = new ConversionAPI();
+    const config = {
+      api: {
+        key: "testKey",
+        baseUrl: "https://example.com",
+        latestPath: "latest.json",
+        historicalPath: "historical.json"
+      }
+    } as IConfig
+    const conversionAPI: IConversionAPI = new ConversionAPI(config);
 
     // Act
-    const conversion: IConversion = conversionAPI.getCurrentRates(testBase);
+    const conversion: IConversion = await conversionAPI.getCurrentRates(testBase);
 
     // Assert
     expect(conversion.base).toBe(testBase);
