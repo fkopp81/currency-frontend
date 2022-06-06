@@ -40,4 +40,37 @@ describe("Conversion API", () =>
     expect(conversion.base).toBe(testBase);
     expect(conversion.rates[testTo]).toBe(expectedRate);
   })
+
+  test("getCurrentRates fetch fail", async () =>
+  {
+    // Arrange
+    const testBase = ECurrency.EUR
+    const testTo = ECurrency.CHF;
+    const currencyString = ECurrency[testTo];
+    const expectedRate = 2;
+
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        json: () => Promise.resolve({
+          base: testBase,
+          rates: { [currencyString]: expectedRate }
+        })
+      })
+    ) as jest.Mock;
+
+    const config = {
+      api: {
+        key: "testKey",
+        baseUrl: "https://example.com",
+        latestPath: "latest.json",
+        historicalPath: "historical.json"
+      }
+    } as IConfig
+    const conversionAPI: IConversionAPI = new ConversionAPI(config);
+
+    // Act
+    // Assert
+    await expect(conversionAPI.getCurrentRates(testBase)).rejects.toThrow();
+  })
 })
