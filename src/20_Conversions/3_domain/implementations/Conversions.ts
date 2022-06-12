@@ -1,15 +1,17 @@
 import { IConfig } from "100_config/5_objects";
-import { IConversionAPI } from "20_Conversions/4_infrastructure/interfaces/IConversionAPI";
+import type { IConversionAPI } from "20_Conversions/4_infrastructure/interfaces/IConversionAPI";
 import { ECurrency, IConversion, IConversionHistory } from "20_Conversions/5_objects";
-import { IPersistance } from "99_Persistance/4_infrastructure";
+import type { IPersistance } from "99_Persistance/4_infrastructure";
 import { IConversions } from ".."
+import {inject, injectable} from "tsyringe";
 
-export default class conversions implements IConversions
+@injectable()
+export default class Conversions implements IConversions
 {
   private persistanceKey: string
-  constructor(config: IConfig,
-    private conversionAPI: IConversionAPI,
-    private persistance: IPersistance)
+  constructor(@inject("IConfig") config: IConfig,
+    @inject("IConversionAPI") private conversionAPI: IConversionAPI,
+    @inject("IPersistance") private persistance: IPersistance)
   { 
     this.persistanceKey = config.persistanceKeys.conversions;
   }

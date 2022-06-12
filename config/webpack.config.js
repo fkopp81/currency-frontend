@@ -421,6 +421,7 @@ module.exports = function (webpackEnv) {
                 ],
                 
                 plugins: [
+                  require.resolve('babel-plugin-transform-typescript-metadata'),
                   isEnvDevelopment &&
                     shouldUseReactRefresh &&
                     require.resolve('react-refresh/babel'),

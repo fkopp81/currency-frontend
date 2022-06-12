@@ -24,6 +24,9 @@ module.exports = babelJest.createTransformer({
       },
     ],
   ],
+  plugins: [
+    require.resolve('babel-plugin-transform-typescript-metadata')
+  ],
   babelrc: false,
   configFile: false,
 });

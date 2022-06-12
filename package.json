@@ -153,5 +153,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-transform-typescript-metadata": "^0.3.2"
   }
 }

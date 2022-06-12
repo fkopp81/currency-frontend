@@ -1,4 +1,5 @@
 import { IPersistance } from "../interfaces/IPersistance";
+//import IPersistance = Persistance.IPersistance
 
 export default class LocalStoragePersistance implements IPersistance
 {

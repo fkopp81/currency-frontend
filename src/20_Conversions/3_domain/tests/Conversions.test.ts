@@ -2,7 +2,7 @@ import { IConfig } from "100_config/5_objects";
 import { ECurrency, IConversion } from "20_Conversions/5_objects";
 import Conversions from "../implementations/Conversions";
 import { IConversions } from "../interfaces/IConversions";
-import { IPersistance} from "99_Persistance/4_infrastructure";
+import { IPersistance } from "99_Persistance/4_infrastructure";
 import { mock } from 'jest-mock-extended';
 import { IConversionAPI } from "20_Conversions/4_infrastructure/interfaces/IConversionAPI";
 import mockConversionHistory from "./mockIConversionHistory";
