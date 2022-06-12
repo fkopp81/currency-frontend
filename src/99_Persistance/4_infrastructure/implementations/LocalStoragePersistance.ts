@@ -1,6 +1,8 @@
+import { injectable } from "tsyringe";
 import { IPersistance } from "../interfaces/IPersistance";
 //import IPersistance = Persistance.IPersistance
 
+@injectable()
 export default class LocalStoragePersistance implements IPersistance
 {
   save<T>(name: string, data: T): void

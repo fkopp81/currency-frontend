@@ -1,11 +1,14 @@
-import { IConfig } from "100_config/5_objects";
+import type { IConfig } from "100_config/5_objects";
 import { ECurrency, IConversion } from "20_Conversions/5_objects";
 import { IRates } from "20_Conversions/5_objects/interfaces/IRates";
+import { inject, injectable } from "tsyringe";
 import { IConversionAPI } from "../interfaces/IConversionAPI";
+
+@injectable()
 export default class ConversionAPI implements IConversionAPI
 {
   private api
-  constructor(config: IConfig)
+  constructor(@inject("IConfig") config: IConfig)
   {
     this.api = config.api;
   }
