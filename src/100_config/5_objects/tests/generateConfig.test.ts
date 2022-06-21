@@ -1,4 +1,4 @@
-import { IConfig, IConfigFile } from "..";
+import { IConfigFile } from "..";
 import ConfigFile from "../files/config.json"
 import generateConfig from "../implementations/generateConfig";
 
