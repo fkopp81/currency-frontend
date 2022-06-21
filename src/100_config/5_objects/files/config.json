@@ -1,0 +1,10 @@
+{
+  "api": {
+    "baseUrl": "https://openexchangerates.org/api/",
+    "latestPath": "latest.json",
+    "historicalPath": "historical/"
+  },
+  "persistanceKeys": {
+    "conversions": "conversions"
+  }
+}
