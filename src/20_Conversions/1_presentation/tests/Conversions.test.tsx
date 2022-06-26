@@ -23,4 +23,13 @@ describe("Conversions", () =>
     expect(comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")).toBeTruthy();
     expect(comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")).toBeTruthy();
   });
+  test("renders output field", () => {
+    // Arrange
+    render(<Conversions />);
+    const output = screen.getByRole("status");
+    // Act
+    // Assert
+    expect(output).toBeDefined();
+  });
+  
 });
