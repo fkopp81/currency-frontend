@@ -1,5 +1,7 @@
+import { IConversions } from "20_Conversions/3_domain";
 import { ECurrency } from "25_Currency/5_objects";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { findByRole, fireEvent, render, screen } from "@testing-library/react";
+import { mock } from "jest-mock-extended";
 import Conversions from "../implementations/Conversions";
 
 describe("Conversions", () =>
@@ -68,8 +70,27 @@ describe("Conversions", () =>
     expect(button).toBeEnabled();
   });
 
-    test("submit button is enabled when one currency is not selected", () => {
-    render(<Conversions />);
+  test("submit button is disabled when one currency is not selected", () => {
+  render(<Conversions />);
+  const comboBoxes = screen.getAllByRole("combobox");
+  const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
+  const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
+  const button = screen.getByRole("button");
+  // Act
+  fireEvent.change(fromComboBox!, { target: { value: ECurrency.CHF } });
+  fireEvent.change(toComboBox!, { target: { value: ECurrency.EUR } });
+  fireEvent.change(toComboBox!, { target: { value: "" } });
+  // Assert
+  expect(button).toBeDisabled();
+  });
+  
+  test("displays conversion rate on submission", async () => {
+    // Arrange
+    const testRate = 7.357;
+    const conversionsDomain = mock<IConversions>();
+    conversionsDomain.getCurrentRate.mockReturnValue(
+      Promise.resolve(testRate));
+    render(<Conversions conversions={conversionsDomain} />);
     const comboBoxes = screen.getAllByRole("combobox");
     const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
     const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
@@ -77,8 +98,12 @@ describe("Conversions", () =>
     // Act
     fireEvent.change(fromComboBox!, { target: { value: ECurrency.CHF } });
     fireEvent.change(toComboBox!, { target: { value: ECurrency.EUR } });
-    fireEvent.change(toComboBox!, { target: { value: "" } });
+    fireEvent.click(button);
+    const output = await screen.findByText(`${testRate}`);
     // Assert
-    expect(button).toBeDisabled();
+    expect(conversionsDomain.getCurrentRate).toHaveBeenCalled();
+    expect(output).toBeDefined();
+    expect(output).toHaveAttribute("role", "status");
   });
+  
 });
