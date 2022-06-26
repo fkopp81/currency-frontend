@@ -1,4 +1,4 @@
-import { ECurrency } from "../../5_objects";
+import { ECurrency } from "25_Currency/5_objects";
 import { IConversionHistory } from "../../5_objects";
 
 const mockConversionHistory: IConversionHistory = {

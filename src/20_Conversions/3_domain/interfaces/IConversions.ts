@@ -1,4 +1,4 @@
-import { ECurrency } from "../../5_objects/interfaces/ECurrency"
+import { ECurrency } from "../../../25_Currency/5_objects/interfaces/ECurrency"
 
 export const DConversions = "IConversions"
 export interface IConversions

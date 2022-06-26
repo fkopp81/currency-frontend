@@ -1,5 +1,6 @@
 import { IConfig } from "100_config/5_objects";
-import { ECurrency, IConversion } from "20_Conversions/5_objects";
+import { IConversion } from "20_Conversions/5_objects";
+import { ECurrency } from "25_Currency/5_objects";
 import ConversionAPI from "../implementations/ConversionAPI";
 import { IConversionAPI } from "../interfaces/IConversionAPI"
 
