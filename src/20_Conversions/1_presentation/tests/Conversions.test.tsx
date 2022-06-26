@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { ECurrency } from "25_Currency/5_objects";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Conversions from "../implementations/Conversions";
 
 describe("Conversions", () =>
@@ -42,5 +43,31 @@ describe("Conversions", () =>
     // Assert
     expect(output).toBeDefined();
     expect(output).toHaveAttribute("type", "submit");
+  });
+
+  test("submit button is initially disabled", () => {
+    // Arrange
+    render(<Conversions />);
+    const comboBoxes = screen.getAllByRole("combobox");
+    const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
+    const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
+    const button = screen.getByRole("button");
+    // Act
+    
+    // Assert
+    expect(button).toBeDisabled();
+  });
+
+  test("submit button is enabled when both currencies have been selected", () => {
+    render(<Conversions />);
+    const comboBoxes = screen.getAllByRole("combobox");
+    const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
+    const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
+    const button = screen.getByRole("button");
+    // Act
+    fireEvent.change(fromComboBox!, { target: { value: ECurrency.CHF } });
+    fireEvent.change(toComboBox!, { target: { value: ECurrency.EUR } });
+    // Assert
+    expect(button).toBeEnabled();
   });
 });
