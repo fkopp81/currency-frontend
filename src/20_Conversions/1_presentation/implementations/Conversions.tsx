@@ -1,8 +1,10 @@
+import SelectCurrency from "25_Currency/1_presentation/implementations/SelectCurrency";
+
 const Conversions = () =>
 { 
   return <form aria-label="Conversions">
-    <label>From: <select aria-label="from"></select></label>
-    <label>To: <select aria-label="to"></select></label>
+    <SelectCurrency label="From:" ariaLabel="from"/>
+    <SelectCurrency label="To:" ariaLabel="to"/>
     <input type="submit" value="Submit"></input>
     <label>Rate: <output></output></label>
   </form>
