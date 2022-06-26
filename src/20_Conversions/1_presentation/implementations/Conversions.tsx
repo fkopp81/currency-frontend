@@ -17,15 +17,16 @@ export const Conversions = ({conversions = container.resolve(DConversions)}: IPr
   const [output, setOutput] = useState<string>("");
   const submitHandler = useCallback(async () =>
   {
-    if (fromCurrency === undefined || toCurrency === undefined) return;
+    if (fromCurrency === undefined || toCurrency === undefined) return false;
     const rate = await conversions.getCurrentRate(fromCurrency, toCurrency);
     setOutput(`${rate}`);
+    return false;
   }, [conversions, fromCurrency, toCurrency])
   return <form aria-label="Conversions">
     <SelectCurrency label="From:" ariaLabel="from" onSelect={setFromCurrency}/>
     <SelectCurrency label="To:" ariaLabel="to" onSelect={setToCurrency}/>
     <input
-      type="submit"
+      type="button"
       value="Submit"
       disabled={fromCurrency === undefined || toCurrency === undefined}
       onClick={submitHandler}
