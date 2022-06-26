@@ -31,5 +31,16 @@ describe("Conversions", () =>
     // Assert
     expect(output).toBeDefined();
   });
+
+  test("renders submit button", () => {
+    // Arrange
+    render(<Conversions />);
+    const output = screen.getByRole("button");
+    // Act
+    // Assert
+    expect(output).toBeDefined();
+    expect(output).toHaveAttribute("type", "submit");
+  });
+  
   
 });
