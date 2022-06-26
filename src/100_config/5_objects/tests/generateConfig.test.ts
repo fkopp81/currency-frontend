@@ -10,8 +10,11 @@ describe("generateConfig", () =>
     const testKey = "testKey";
     process.env.API_KEY = testKey;
     const testConfig = ConfigFile;
+    const apiFile = {
+      API_KEY: testKey
+    };
     // Act
-    const config = generateConfig(testConfig);
+    const config = generateConfig(testConfig, apiFile);
     // Assert
     expect(config).toBeTruthy();
   });
@@ -20,10 +23,12 @@ describe("generateConfig", () =>
   {
     // Arrange
     const testKey = "testKey";
-    process.env.API_KEY = testKey;
+    const apiFile = {
+      API_KEY: testKey
+    };
     const testConfig = ConfigFile;
     // Act
-    const config = generateConfig(testConfig);
+    const config = generateConfig(testConfig, apiFile);
     // Assert
     expect(config.api.key).toBe(testKey);
   })
@@ -32,21 +37,25 @@ describe("generateConfig", () =>
   {
     // Arrange
     const testKey = "";
-    process.env.API_KEY = testKey;
+    const apiFile = {
+      API_KEY: testKey
+    };
     const testConfig = ConfigFile;
     // Act    // Assert
-      expect(() => generateConfig(testConfig)).toThrow();
+      expect(() => generateConfig(testConfig, apiFile)).toThrow();
   })
 
   test("throws when api key is in config file", async () =>
   {
     // Arrange
     const testKey = "testKey";
-    process.env.API_KEY = testKey;
+    const apiFile = {
+      API_KEY: testKey
+    };
     const testConfig: any = JSON.parse(JSON.stringify(ConfigFile));
     testConfig!.api!.key = testKey;
     // Act
     // Assert
-    expect(() => generateConfig(testConfig as IConfigFile)).toThrow();
+    expect(() => generateConfig(testConfig as IConfigFile, apiFile)).toThrow();
   });
 });
