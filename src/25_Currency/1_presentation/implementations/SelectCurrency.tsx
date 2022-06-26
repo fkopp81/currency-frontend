@@ -1,12 +1,14 @@
 import { ECurrency } from "25_Currency/5_objects";
+import { ChangeEvent, useCallback } from "react";
 
 interface IProps
 {
   label: string
   ariaLabel: string
+  onSelect: (currency: ECurrency | undefined) => void
 }
 
-const SelectCurrency = ({ label, ariaLabel }: IProps) =>
+const SelectCurrency = ({ label, ariaLabel, onSelect }: IProps) =>
 {
   const options = [];
   options.push(<option value="" key="">---</option>);
@@ -18,7 +20,17 @@ const SelectCurrency = ({ label, ariaLabel }: IProps) =>
       {ECurrency[currencyIndex]}
     </option>);
   }
-  return <label>{label}<select aria-label={ariaLabel}>
+  const handleChange = useCallback((event: ChangeEvent<HTMLSelectElement>) =>
+  {
+    const value = event.currentTarget.value;
+    const currency: ECurrency = Number(value);
+    if (!value || isNaN(currency)) return onSelect(undefined);
+    onSelect(currency);
+  }, [onSelect])
+  return <label>{label}<select
+    aria-label={ariaLabel}
+    onChange={handleChange}
+  >
     {options}
   </select></label>
 };

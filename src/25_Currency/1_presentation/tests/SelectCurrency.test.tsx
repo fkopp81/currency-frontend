@@ -40,7 +40,7 @@ describe('SelectCurrency', () => {
     fireEvent.change(selectCurrency, { target: { value: ECurrency.EUR } });
     // Assert
     expect(selectCurrency).toHaveValue(`${ECurrency.EUR}`);
-    expect(handleSelect).toBeCalledWith<[string]>(`${ECurrency.EUR}`);
+    expect(handleSelect).toBeCalledWith<[ECurrency]>(ECurrency.EUR);
   });
   
 });
