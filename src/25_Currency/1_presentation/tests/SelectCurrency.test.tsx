@@ -21,7 +21,7 @@ describe('SelectCurrency', () => {
     expect(options[0]).toHaveAttribute("value", "");
     for (const currency in ECurrency)
     {
-      if (isNaN(Number(currency))) return;
+      if (isNaN(Number(currency))) continue;
       expect(
         options.find((option) => option.getAttribute("value") === currency))
         .toBeDefined();
