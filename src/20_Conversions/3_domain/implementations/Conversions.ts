@@ -1,9 +1,10 @@
 import type { IConfig } from "100_config/5_objects";
 import type { IConversionAPI } from "20_Conversions/4_infrastructure/interfaces/IConversionAPI";
-import { ECurrency, IConversion, IConversionHistory } from "20_Conversions/5_objects";
+import { IConversion, IConversionHistory } from "20_Conversions/5_objects";
 import type { IPersistance } from "99_Persistance/4_infrastructure";
 import { IConversions } from ".."
 import {inject, injectable} from "tsyringe";
+import { ECurrency } from "25_Currency/5_objects";
 
 @injectable()
 export default class Conversions implements IConversions
