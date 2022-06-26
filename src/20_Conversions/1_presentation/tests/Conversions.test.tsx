@@ -70,4 +70,18 @@ describe("Conversions", () =>
     // Assert
     expect(button).toBeEnabled();
   });
+
+    test("submit button is enabled when one currency is not selected", () => {
+    render(<Conversions />);
+    const comboBoxes = screen.getAllByRole("combobox");
+    const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
+    const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
+    const button = screen.getByRole("button");
+    // Act
+    fireEvent.change(fromComboBox!, { target: { value: ECurrency.CHF } });
+    fireEvent.change(toComboBox!, { target: { value: ECurrency.EUR } });
+    fireEvent.change(toComboBox!, { target: { value: "" } });
+    // Assert
+    expect(button).toBeDisabled();
+  });
 });
