@@ -48,9 +48,6 @@ describe("Conversions", () =>
   test("submit button is initially disabled", () => {
     // Arrange
     render(<Conversions />);
-    const comboBoxes = screen.getAllByRole("combobox");
-    const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
-    const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
     const button = screen.getByRole("button");
     // Act
     
