@@ -5,7 +5,11 @@ import SelectCurrency from "../implementations/SelectCurrency";
 describe('SelectCurrency', () => {
   test("renders comboBox", () => {
     // Arrange
-    render(<SelectCurrency label="Test:" ariaLabel="test"/>);
+    render(<SelectCurrency
+      label="Test:"
+      ariaLabel="test"
+      onSelect={jest.fn()}
+    />);
     const selectCurrency = screen.getByRole("combobox");
     // Act
     // Assert
@@ -13,7 +17,11 @@ describe('SelectCurrency', () => {
   });
   test("contains options for all currencies and unselected", () => {
     // Arrange
-    render(<SelectCurrency label="Test:" ariaLabel="test" />);
+    render(<SelectCurrency
+      label="Test:"
+      ariaLabel="test"
+      onSelect={jest.fn()}
+    />);
     const options = screen.getAllByRole("option");
     // Act
     // Assert
