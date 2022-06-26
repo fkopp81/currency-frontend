@@ -1,6 +1,6 @@
 import { IConversions } from "20_Conversions/3_domain";
 import { ECurrency } from "25_Currency/5_objects";
-import { findByRole, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, getRoles, render, screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
 import Conversions from "../implementations/Conversions";
 
@@ -10,7 +10,7 @@ describe("Conversions", () =>
   {
     // Arrange
     // Act
-    render(<Conversions />)
+    render(<Conversions conversions={mock<IConversions>()} />);
     const ConversionsElement = screen.getByRole("form")
     // Assert
     expect(ConversionsElement).toBeTruthy();
@@ -19,7 +19,7 @@ describe("Conversions", () =>
 
   test("renders comboBoxes for from-to conversions", () => {
     // Arrange
-    render(<Conversions />);
+    render(<Conversions conversions={mock<IConversions>()} />);
     const comboBoxes = screen.getAllByRole("combobox");
     // Act
     // Assert
@@ -30,7 +30,7 @@ describe("Conversions", () =>
 
   test("renders output field", () => {
     // Arrange
-    render(<Conversions />);
+    render(<Conversions conversions={mock<IConversions>()} />);
     const output = screen.getByRole("status");
     // Act
     // Assert
@@ -39,7 +39,7 @@ describe("Conversions", () =>
 
   test("renders submit button", () => {
     // Arrange
-    render(<Conversions />);
+    render(<Conversions conversions={mock<IConversions>()} />);
     const output = screen.getByRole("button");
     // Act
     // Assert
@@ -49,7 +49,7 @@ describe("Conversions", () =>
 
   test("submit button is initially disabled", () => {
     // Arrange
-    render(<Conversions />);
+    render(<Conversions conversions={mock<IConversions>()} />);
     const button = screen.getByRole("button");
     // Act
     
@@ -58,7 +58,7 @@ describe("Conversions", () =>
   });
 
   test("submit button is enabled when both currencies have been selected", () => {
-    render(<Conversions />);
+    render(<Conversions conversions={mock<IConversions>()} />);
     const comboBoxes = screen.getAllByRole("combobox");
     const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
     const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
@@ -71,7 +71,7 @@ describe("Conversions", () =>
   });
 
   test("submit button is disabled when one currency is not selected", () => {
-  render(<Conversions />);
+  render(<Conversions conversions={mock<IConversions>()} />);
   const comboBoxes = screen.getAllByRole("combobox");
   const fromComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")
   const toComboBox = comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")
@@ -103,7 +103,7 @@ describe("Conversions", () =>
     // Assert
     expect(conversionsDomain.getCurrentRate).toHaveBeenCalled();
     expect(output).toBeDefined();
-    expect(output).toHaveAttribute("role", "status");
+    expect(getRoles(output)["status"]).toBeDefined();
   });
   
 });
