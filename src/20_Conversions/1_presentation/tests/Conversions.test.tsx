@@ -2,7 +2,7 @@ import { IConversions } from "20_Conversions/3_domain";
 import { ECurrency } from "25_Currency/5_objects";
 import { fireEvent, getRoles, render, screen } from "@testing-library/react";
 import { mock } from "jest-mock-extended";
-import Conversions from "../implementations/Conversions";
+import { Conversions } from "../implementations/Conversions";
 
 describe("Conversions", () =>
 {

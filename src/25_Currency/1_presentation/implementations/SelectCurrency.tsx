@@ -8,7 +8,7 @@ interface IProps
   onSelect: (currency: ECurrency | undefined) => void
 }
 
-const SelectCurrency = ({ label, ariaLabel, onSelect }: IProps) =>
+export function SelectCurrency({ label, ariaLabel, onSelect }: IProps)
 {
   const options = [];
   options.push(<option value="" key="">---</option>);
@@ -34,5 +34,3 @@ const SelectCurrency = ({ label, ariaLabel, onSelect }: IProps) =>
     {options}
   </select></label>
 };
-
-export default SelectCurrency;

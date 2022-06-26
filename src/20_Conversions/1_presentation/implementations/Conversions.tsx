@@ -1,5 +1,5 @@
 import { DConversions, IConversions } from "20_Conversions/3_domain";
-import SelectCurrency from "25_Currency/1_presentation/implementations/SelectCurrency";
+import { SelectCurrency } from "25_Currency/1_presentation";
 import { ECurrency } from "25_Currency/5_objects";
 import { useCallback, useState } from "react";
 import { container } from "tsyringe";
@@ -9,7 +9,7 @@ interface IProps
   conversions?: IConversions
 }
 
-const Conversions = ({conversions = container.resolve(DConversions)}: IProps) =>
+export const Conversions = ({conversions = container.resolve(DConversions)}: IProps) =>
 { 
   if (!conversions) throw new Error("Internal app error");
   const [fromCurrency, setFromCurrency] = useState<ECurrency | undefined>(undefined);
@@ -33,5 +33,3 @@ const Conversions = ({conversions = container.resolve(DConversions)}: IProps) =>
     <label>Rate: <output>{output}</output></label>
   </form>
 }
-
-export default Conversions;

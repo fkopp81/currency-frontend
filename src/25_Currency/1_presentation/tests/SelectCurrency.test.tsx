@@ -1,6 +1,6 @@
 import { ECurrency } from "25_Currency/5_objects";
 import { fireEvent, render, screen } from "@testing-library/react";
-import SelectCurrency from "../implementations/SelectCurrency";
+import { SelectCurrency } from "../implementations/SelectCurrency";
 
 describe('SelectCurrency', () => {
   test("renders comboBox", () => {
