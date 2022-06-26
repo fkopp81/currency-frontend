@@ -13,6 +13,7 @@ describe("Conversions", () =>
     expect(ConversionsElement).toBeTruthy();
     expect(ConversionsElement.getAttribute("aria-label")).toBe("Conversions");
   })
+
   test("renders comboBoxes for from-to conversions", () => {
     // Arrange
     render(<Conversions />);
@@ -23,6 +24,7 @@ describe("Conversions", () =>
     expect(comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "from")).toBeTruthy();
     expect(comboBoxes.find((comboBox) => comboBox.getAttribute("aria-label") === "to")).toBeTruthy();
   });
+
   test("renders output field", () => {
     // Arrange
     render(<Conversions />);
@@ -41,6 +43,4 @@ describe("Conversions", () =>
     expect(output).toBeDefined();
     expect(output).toHaveAttribute("type", "submit");
   });
-  
-  
 });
