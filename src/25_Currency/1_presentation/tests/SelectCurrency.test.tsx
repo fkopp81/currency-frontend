@@ -1,5 +1,5 @@
 import { ECurrency } from "25_Currency/5_objects";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import SelectCurrency from "../implementations/SelectCurrency";
 
 describe('SelectCurrency', () => {
@@ -26,6 +26,21 @@ describe('SelectCurrency', () => {
         options.find((option) => option.getAttribute("value") === currency))
         .toBeDefined();
     }
+  });
+  test("handles value changes", () => {
+    // Arrange
+    const handleSelect = jest.fn();
+    render(<SelectCurrency
+      label="Test:"
+      ariaLabel="test"
+      onSelect={handleSelect}
+    />);
+    const selectCurrency = screen.getByRole("combobox");
+    // Act
+    fireEvent.change(selectCurrency, { target: { value: ECurrency.EUR } });
+    // Assert
+    expect(selectCurrency).toHaveValue(`${ECurrency.EUR}`);
+    expect(handleSelect).toBeCalledWith<[string]>(`${ECurrency.EUR}`);
   });
   
 });
